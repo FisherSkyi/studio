@@ -13,15 +13,14 @@ display(accumulate((x, y) => pair(x, y), null, x));
 
 const xs = list(1,2,3,4,5);
 const sx = map(x => stringify(x), xs); //display
-// display_list(sx);
-
+display_list(sx);
 
 accumulate((x , y) => {
     display("x here is:");
     display(x);
     display("y here is:");
     display(y);
-    display(x + y, "Result of this iteration is:");
+    display(x , "Result of this iteration is:");
     return x + y;
 }, "", sx);
 
