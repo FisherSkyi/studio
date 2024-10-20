@@ -73,30 +73,61 @@
 
 // b
 
-function bubblesort_list(L) {
-    function get_element_n(n, xs) {
-        return n === 1 ? head(xs) : get_element_n(n-1, tail(xs));
+// function bubblesort_list(L) {
+//     function get_element_n(n, xs) {
+//         return n === 1 ? head(xs) : get_element_n(n-1, tail(xs));
+//     }
+//     function get_list_n(n, xs) {
+//         return n === 1 ? xs : get_list_n(n-1, tail(xs));
+//     }
+//     const len = length(L);
+//     for (let i = len; i >= 1; i = i - 1) {
+//         for (let j = 1; j < i; j = j + 1) {
+//             if (get_element_n(j, L) > get_element_n(j+1, L)) {
+//                 const temp = get_element_n(j, L);
+//                 set_head(get_list_n(j, L), get_element_n(j+1, L));
+//                 set_head(get_list_n(j+1, L), temp);
+//             }
+//         }
+//     }
+// }
+
+// const LL = list(3, 5, 2, 4, 1);
+// bubblesort_list(LL);
+// LL; // should show [1, [2, [3, [4, [5, null]]]]]
+
+//3
+
+const mem = [];
+
+function read(n, k) {
+    return mem[n] === undefined
+           ? undefined
+           : mem[n][k];
+}
+
+function write(n, k, value) {
+    if (mem[n] === undefined) {
+        mem[n] = [];
     }
-    function get_list_n(n, xs) {
-        return n === 1 ? xs : get_element_n(n-1, tail(xs));
-    }
-    const len = length(L);
-    for (let i = len; i >= 1; i = i - 1) {
-        for (let j = 1; j < i; j = j + 1) {
-            if (get_element_n(j, L) > get_element_n(j+1, L)) {
-                const temp = get_element_n(j, L);
-                set_head(get_list_n(j, L), get_element_n(j+1, L));
-                set_head(get_list_n(j+1, L), temp);
-            }
-        }
+    mem[n][k] = value;
+}
+
+function mchoose(n, k) {
+    if (read(n, k) !== undefined) {
+        return read(n, k);
+    } else {
+        const result = k > n
+                       ? 0
+                       : k === 0 || k === n
+                       ? 1
+                       : mchoose(n - 1, k) + mchoose(n - 1, k - 1);
+        write(n, k, result);
+        return result;
     }
 }
 
-const LL = list(3, 5, 2, 4, 1);
-bubblesort_list(LL);
-LL; // should show [1, [2, [3, [4, [5, null]]]]]
-
-
+mchoose(7, 4);
 
 
 
