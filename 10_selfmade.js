@@ -129,6 +129,19 @@ function mchoose(n, k) {
 
 mchoose(7, 4);
 
+/*
+Draw the call tree for the evaluation of the function call mchoose(7, 4). 
+Show only the calls to mchoose, 
+
+and for calls whose return values can be found in the table mem,
+indicate so. 
+What is the order of growth in time of mchoose(n, k)?
 
 
+
+What is the order of growth in space of mchoose(n, k)? 
+
+
+n + k ? list??
+*/
 
