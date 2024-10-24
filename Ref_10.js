@@ -1,5 +1,6 @@
 function stream_tail(xs) {
-    return tail(xs)();//apply see the next ele
+    return tail(xs)();
+    //apply see the next ele
 }
 
 function stream_ref(s, n) {
@@ -11,7 +12,7 @@ function stream_ref(s, n) {
 function stream_map(f, s) {
     return is_null(s)
         ? null
-        : pair(f(head(s)),
+        : pair(f(head(s)),// call f, display head(s) 
                () => stream_map(f, stream_tail(s)));
 }
 
@@ -27,7 +28,7 @@ const x = stream_map(display, enum_stream(0, 10));
 // the head of stream is not protected
 stream_ref(x, 1);
 stream_ref(x, 2);
-
+stream_ref(x, 3);
 
 
 function zip_streams(lst) {
