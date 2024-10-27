@@ -196,8 +196,9 @@ function factorial(n) {
 
 const E_base = stream_map(x => 1 / factorial(x), integers_from(0));
 eval_stream(E_base, 10);
-let sum = 0;
+
 function E_x(x, n) {
+    let sum = 0;
     for (let i = n; i > -1; i = i -1) {
         sum = sum + stream_ref(E_base, n - i) * math_pow(x, n - i);
     }
@@ -218,8 +219,9 @@ const base = stream_map(x => 1/factorial(x), base2);
 
 const sin_base = alt_ones(zeros1, base);
 
-let sin_sum = 0;
+
 function sin_x(x, n) {
+    let sin_sum = 0;
     for (let i = n; i > -1; i = i -1) {
         sin_sum = sin_sum + stream_ref(sin_base, n - i) * math_pow(x, n - i);
     }
@@ -228,3 +230,10 @@ function sin_x(x, n) {
 
 sin_x(math_PI/3, 100); // 0.8660254
 
+// const math_Sin =  x => sin_x(x, 100);
+
+function Sin(x) {
+    return sin_x(x, 100);
+}
+
+Sin(math_PI/3);
