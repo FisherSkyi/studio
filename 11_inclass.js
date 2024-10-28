@@ -133,14 +133,15 @@ function stream_pairs(s) {
 }
 
 const ints = pair(1, () => pair(2, () => pair(3, () => pair(4 , () => pair(5, () => null)))));
-eval_stream(stream_pairs(ints), 10);
+display(eval_stream(stream_pairs(ints), 5));
 
 function stream_append_pickle(xs, ys) {
     return is_null(xs)
             ? ys()
             : pair(head(xs),
-                () => stream_append_pickle(stream_tail(xs),
-                ys));
+                    () => stream_append_pickle(     
+                                            stream_tail(xs), 
+                                            ys));
 }
 
 function stream_pairs2(s) {
@@ -156,17 +157,20 @@ function stream_pairs2(s) {
 }
 const x2 = stream_pairs2(integers_from(1));
 
-// eval_stream(x2, 20);
+display("version 2");
+display(eval_stream(x2, 5));
+
 
 function stream_append_interleave(xs, ys) {
     return is_null(xs)
             ? ys()
             : pair(head(xs),
-                () => stream_append_interleave(ys(),
-                () => stream_tail(xs)));
+                    () => stream_append_interleave(
+                                                ys(),
+                                                () => stream_tail(xs)));
 }
 
-function stream_pairs3_v0(s) {
+function stream_pairs3_v0(s) { // same as stream_pair2
     return is_null(s)
                 ? null
                 : stream_append_interleave(
@@ -178,6 +182,28 @@ function stream_pairs3_v0(s) {
 
 }
 
-eval_stream(stream_pairs3_v0(integers_from(1)), 200);
+display("version 3");
+display(eval_stream(stream_pairs3_v0(integers_from(1)), 20));
+
+function interleave_stream_append(s1, s2) {
+    return is_null(s1) 
+            ? s2
+            : pair(head(s1), 
+                () => interleave_stream_append(s2,
+                                                stream_tail(s1)));
+}
 
 
+
+function stream_pairs3(s) {
+    return (is_null(s) || is_null(stream_tail(s))) 
+                ? null
+                : pair(pair(head(s), head(stream_tail(s))),
+                        () => interleave_stream_append(
+                            stream_map(x => pair(head(s), x),
+                                    stream_tail(stream_tail(s))),
+                            stream_pairs3(stream_tail(s)))
+                        );
+}
+
+eval_stream(stream_pairs3(integers_from(1)), 10);
